@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>rongCloud test</title>
+    <link rel="stylesheet" href="./app/index.css">
+</head>
+<body>
+<!--<div>-->
+    <!--<input type="text" placeholder="input token" id="input-token">-->
+<!--</div>-->
+<div>
+    <button onclick="link(1)">链接 token1</button>
+    <button onclick="link(2)">链接 token2</button>
+</div>
+<div>
+    <input type="text" placeholder="put message" id="msg">
+    <button onclick="sendMsg()">发送消息</button>
+</div>
+
+<script src="//cdn.ronghub.com/RongIMLib-2.3.0.js"></script>
+<script src="./app/init.js"></script>
+<script src="./app/msg.js"></script>
+<script>
+    var token1 = 'IEynRJjdc7lkiOUfOt/40TbzeqG/RDPAFZBVld6VkgfO4rKLaK4NgXx9HE3i5ast/pcFpqjp/YX/JFm3XlRN1g==';
+    var token2 = 'whGCtDvMaer0bp037036ljbzeqG/RDPAFZBVld6VkgfO4rKLaK4NgXx9HE3i5ast9SKXPYk8GRoanQh0qBw4ZA==';
+    var users = {
+        '0001': token1,
+        '0002': token2
+    }
+    function getValue(anchor) {
+        return document.querySelector(anchor).value
+    }
+    //用token链接容云
+    function link(i) {
+        var userId = '000'+i;
+        var token = users[userId];
+        localStorage.setItem('token', token);
+        sessionStorage.setItem('userId', userId);
+        init(token)
+    }
+    //发送消息
+    function sendMsg() {
+        var msg = new RongIMLib.TextMessage({
+            content: getValue('#msg'),
+            extra: 'extra info'
+        });
+        var conversationtype = RongIMLib.ConversationType.PRIVATE; // 单聊,其他会话选择相应的消息类型即可。
+        var targetId = sessionStorage.getItem('userId')=='0001'?'0002':'0001'; // 目标 Id
+        send({
+            msg: msg,
+            conversationtype: conversationtype,
+            targetId: targetId,
+        })
+    }
+</script>
+</body>
+</html>
