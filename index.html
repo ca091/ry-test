@@ -15,6 +15,7 @@
     <button onclick="link(2)">链接 token2</button>
 </div>
 <div>
+    <input type="text" placeholder="put targetId" id="targetId">
     <input type="text" placeholder="put message" id="msg">
     <button onclick="sendMsg()">发送消息</button>
 </div>
@@ -33,8 +34,12 @@
 <script src="./app/init.js"></script>
 <script src="./app/msg.js"></script>
 <script>
-    var token1 = 'IEynRJjdc7lkiOUfOt/40TbzeqG/RDPAFZBVld6VkgfO4rKLaK4NgXx9HE3i5ast/pcFpqjp/YX/JFm3XlRN1g==';
-    var token2 = 'whGCtDvMaer0bp037036ljbzeqG/RDPAFZBVld6VkgfO4rKLaK4NgXx9HE3i5ast9SKXPYk8GRoanQh0qBw4ZA==';
+//    测试
+//    var token1 = 'IEynRJjdc7lkiOUfOt/40TbzeqG/RDPAFZBVld6VkgfO4rKLaK4NgXx9HE3i5ast/pcFpqjp/YX/JFm3XlRN1g==';
+//    var token2 = 'whGCtDvMaer0bp037036ljbzeqG/RDPAFZBVld6VkgfO4rKLaK4NgXx9HE3i5ast9SKXPYk8GRoanQh0qBw4ZA==';
+//    正式
+    var token1 = 'jCEwmQKqWCWl6ebgNl6rN0UG0sqYD6tnFIY/f8h1oynXWUiEkmaXQfzoi1pfadYaSCkJ7Gk08q7V+reOgMhC2g==';
+    var token2 = 'PZDSYqk4XYeubMYtx4SYSEUG0sqYD6tnFIY/f8h1oynXWUiEkmaXQdWotLx6pDhaIPkqrXghYJZGIXFOpBD5ng==';
     var users = {
         '0001': token1,
         '0002': token2
@@ -57,7 +62,10 @@
             extra: 'extra info'
         });
         var conversationtype = RongIMLib.ConversationType.PRIVATE; // 单聊,其他会话选择相应的消息类型即可。
-        var targetId = sessionStorage.getItem('userId')=='0001'?'0002':'0001'; // 目标 Id
+        var targetId = getValue('#targetId');
+        if(targetId.length==0){
+            targetId = sessionStorage.getItem('userId')=='0001'?'0002':'0001'; // 目标 Id
+        }
         send({
             msg: msg,
             conversationtype: conversationtype,

@@ -1,4 +1,5 @@
-var appKey = 'tdrvipkstf375';
+//用于生成token的应用appKey-appSecret，根据自己的应用做更改
+var appKey = 'k51hidwqknq9b';
 var RongIMLib = window.RongIMLib;
 var RongIMClient = RongIMLib.RongIMClient;
 var config = {}

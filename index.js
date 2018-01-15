@@ -1,5 +1,6 @@
 var rongcloudSDK = require('rongcloud-sdk');
-const appKey = 'tdrvipkstf375';
+//用于生成token的应用appKey-appSecret，根据自己的应用做更改
+const appKey = 'k51hidwqknq9b';
 const appSecret = '******';
 
 rongcloudSDK.init(appKey, appSecret);
