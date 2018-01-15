@@ -76,8 +76,54 @@ function init(token) {
         onTokenIncorrect: function() {
             console.log('token无效');
         },
-        onError:function(errorCode){
-            console.log(errorCode);
-        }
+        onError: errorListen
     });
+
+    //启用重连
+    startReConnect()
+}
+
+//错误监听
+function errorListen(errorCode) {
+    var info = '';
+    switch (errorCode) {
+        case RongIMLib.ErrorCode.TIMEOUT:
+            info = '超时';
+            break;
+        case RongIMLib.ErrorCode.UNKNOWN_ERROR:
+            info = '未知错误';
+            break;
+        case RongIMLib.ErrorCode.UNACCEPTABLE_PaROTOCOL_VERSION:
+            info = '不可接受的协议版本';
+            break;
+        case RongIMLib.ErrorCode.IDENTIFIER_REJECTED:
+            info = 'appkey不正确';
+            break;
+        case RongIMLib.ErrorCode.SERVER_UNAVAILABLE:
+            info = '服务器不可用';
+            break;
+    }
+    console.log(errorCode);
+}
+
+//重连
+function startReConnect() {
+    var callback = {
+        onSuccess: function(userId) {
+            console.log("Reconnect successfully." + userId);
+        },
+        onTokenIncorrect: function() {
+            console.log('token无效');
+        },
+        onError: errorListen
+    };
+    var config = {
+        // 默认 false, true 启用自动重连，启用则为必选参数
+        auto: true,
+        // 重试频率 [100, 1000, 3000, 6000, 10000, 18000] 单位为毫秒，可选
+        url: 'cdn.ronghub.com/RongIMLib-2.2.6.min.js',
+        // 网络嗅探地址 [http(s)://]cdn.ronghub.com/RongIMLib-2.2.6.min.js 可选
+        rate: [100, 1000, 3000, 6000, 10000, 18000]
+    };
+    RongIMClient.reconnect(callback, config);
 }

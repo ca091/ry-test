@@ -2,7 +2,6 @@ function send(params) {
     var conversationtype = params.conversationtype;
     var targetId = params.targetId;
     var msg = params.msg;
-    console.log(params)
     RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
             onSuccess: function (message) {
                 //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
@@ -37,4 +36,38 @@ function send(params) {
             }
         }
     );
+}
+
+//推送到app端
+function push(params) {
+    var conversationtype = params.conversationtype;
+    var targetId = params.targetId;
+    var msg = params.msg;
+    var pushData = params.pushData;
+    RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
+            onSuccess: function (message) {
+                console.log('push success')
+            },
+            onError: function (errorCode,message) {
+                console.log('push error')
+            }
+        }, false, pushData
+    );
+}
+
+function historyMsg(params){
+    var conversationType = params.conversationtype;
+    var targetId = params.targetId;
+    var timestrap = null; // 默认传 null，若从头开始获取历史消息，请赋值为 0 ,timestrap = 0;
+    var count = 20; // 每次获取的历史消息条数，范围 0-20 条，可以多次获取。
+    RongIMLib.RongIMClient.getInstance().getHistoryMessages(conversationType, targetId, timestrap, count, {
+        onSuccess: function(list, hasMsg) {
+            // list => Message 数组。
+            // hasMsg => 是否还有历史消息可以获取。
+            console.log(list, hasMsg)
+        },
+        onError: function(error) {
+            console.log("GetHistoryMessages,errorcode:" + error);
+        }
+    });
 }

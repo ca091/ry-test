@@ -18,7 +18,17 @@
     <input type="text" placeholder="put message" id="msg">
     <button onclick="sendMsg()">发送消息</button>
 </div>
+<div>
+    <button onclick="getHistoryMsg()">聊天历史</button>
+</div>
 
+<script>
+    var isWx = /MicroMessenger/i.test(navigator.userAgent);
+    console.log(isWx)
+    if(isWx){
+
+    }
+</script>
 <script src="//cdn.ronghub.com/RongIMLib-2.3.0.js"></script>
 <script src="./app/init.js"></script>
 <script src="./app/msg.js"></script>
@@ -50,6 +60,16 @@
         var targetId = sessionStorage.getItem('userId')=='0001'?'0002':'0001'; // 目标 Id
         send({
             msg: msg,
+            conversationtype: conversationtype,
+            targetId: targetId,
+        })
+    }
+
+    //获取聊天历史
+    function getHistoryMsg() {
+        var conversationtype = RongIMLib.ConversationType.PRIVATE; // 单聊,其他会话选择相应的消息类型即可。
+        var targetId = sessionStorage.getItem('userId')=='0001'?'0002':'0001'; // 目标 Id
+        historyMsg({
             conversationtype: conversationtype,
             targetId: targetId,
         })
