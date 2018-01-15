@@ -1,6 +1,6 @@
 var rongcloudSDK = require('rongcloud-sdk');
 const appKey = 'tdrvipkstf375';
-const appSecret = 'LrWhVvJrPJ4'
+const appSecret = '******';
 
 rongcloudSDK.init(appKey, appSecret);
 
